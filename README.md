@@ -4,10 +4,10 @@ A comprehensive Single Sign-On (SSO) implementation using Next.js, NextAuth.js, 
 
 ## 🏗️ Architecture Overview
 
-```
+```bash
 ┌─────────────────────────────────────────────────────────────────┐
-│                        NGINX Reverse Proxy                     │
-│                      (local.a.com:80)                         │
+│                        NGINX Reverse Proxy                      │
+│                      (local.a.com:80)                           │
 └─────────────────┬──────────────┬──────────────┬────────────────┘
                   │              │              │
                   ▼              ▼              ▼
@@ -65,14 +65,28 @@ chmod +x scripts/setup-secrets.sh
 
 Add this line to your `/etc/hosts` file:
 
-```
+```bash
+# open /etc/hosts
+sudo vim /etc/hosts
+
+# apply the routing
 127.0.0.1 local.a.com
 ```
 
 ### 5. Start MongoDB
 
+If you are using local DB then start
+
 ```bash
 brew services start mongodb-community
+```
+
+Or, if you are using MongoDB cloud then add the connection string in your `.env.local`
+
+```bash
+# MongoDB Configuration
+MONGODB_URI=MONGODB_URI
+DB_NAME=DB_NAME
 ```
 
 ### 6. Start All Services
@@ -183,7 +197,7 @@ cookies: {
 
 ## 📁 Project Structure
 
-```
+```bash
 sso-multi-service/
 ├── service-a/                 # Main authentication service
 │   ├── src/app/
@@ -367,7 +381,7 @@ This project is for educational and demonstration purposes. See individual packa
 
 ### Common Issues
 
-**MongoDB Connection Failed**
+#### MongoDB Connection Failed
 
 ```bash
 # Start MongoDB service
@@ -377,7 +391,7 @@ brew services start mongodb-community
 brew services list | grep mongodb
 ```
 
-**NGINX Configuration Error**
+#### NGINX Configuration Error
 
 ```bash
 # Test configuration
@@ -386,7 +400,7 @@ sudo nginx -t -c $(pwd)/nginx/nginx.conf -p $(pwd)/nginx/
 # Check syntax errors in nginx.conf
 ```
 
-**Service Not Responding**
+##### Service Not Responding
 
 ```bash
 # Check if ports are available
@@ -396,7 +410,7 @@ lsof -ti tcp:3000,3001,3002
 ./scripts/stop-services.sh
 ```
 
-**Domain Resolution Issues**
+#### Domain Resolution Issues
 
 ```bash
 # Verify /etc/hosts entry
@@ -416,4 +430,4 @@ For additional help:
 
 ---
 
-**Built with ❤️ for demonstrating production-ready SSO architecture**
+### Built with ❤️ for demonstrating production-ready SSO architecture
